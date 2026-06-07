@@ -3,7 +3,11 @@
 {
 	"name": "pi-test",
 	"build": {
-		"dockerfile": "./Dockerfile"
+		"dockerfile": "./Dockerfile",
+		"args": {
+			"USER_ID": "${localEnv:DEV_CONTAINER_USER_ID}",
+			"GROUP_ID": "${localEnv:DEV_CONTAINER_GROUP_ID}"
+		}
 	},
 	// Set *default* container specific settings.json values on container create.
 	"customizations": {
@@ -13,6 +17,9 @@
 				"extensions": [
 				]
 		 }
+	},
+	"containerEnv": {
+		"CLOUDFLARE_ACCOUNT_ID": "${localEnv:CLOUDFLARE_ACCOUNT_ID}"
 	},
 
 	"mounts": ["source=${localWorkspaceFolder}/.pi,target=/home/lovely/.pi,type=bind"],
