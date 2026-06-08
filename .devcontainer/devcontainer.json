@@ -22,7 +22,7 @@
 		"CLOUDFLARE_ACCOUNT_ID": "${localEnv:CLOUDFLARE_ACCOUNT_ID}"
 	},
 
-	"mounts": ["source=${localWorkspaceFolder}/.pi,target=/home/lovely/.pi,type=bind"],
+	"mounts": ["source=${localWorkspaceFolder}/.pi-home,target=/home/lovely/.pi,type=bind"],
 
 	// Use 'forwardPorts' to make a list of ports inside the container available locally.
 	// "forwardPorts": [],
