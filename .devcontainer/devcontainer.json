@@ -15,7 +15,8 @@
 				"settings": {},
 				// Add the IDs of extensions you want installed when the container is created.
 				"extensions": [
-					"ms-vscode.vscode-typescript-next"
+					"ms-vscode.vscode-typescript-next",
+					"analytic-signal.preview-html"
 				]
 		 }
 	},

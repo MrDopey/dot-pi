@@ -2,3 +2,4 @@
 .pi-home/agent/sessions/
 .pi/agent/auth.json
 .pi/agent/sessions/
+pi-session-*.html
