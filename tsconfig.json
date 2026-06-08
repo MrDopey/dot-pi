@@ -1,0 +1,13 @@
+{
+  "compilerOptions": {
+    "target": "ESNext",
+    "module": "NodeNext",
+    "moduleResolution": "NodeNext",
+    "paths": {
+      "@earendil-works/pi-coding-agent": ["/usr/local/lib/node_modules/@earendil-works/pi-coding-agent"]
+    }
+  },
+  "include": [
+    ".pi-home/extensions/**/*.ts"
+  ]
+}

@@ -1,14 +1,13 @@
 {
   "lastChangelogVersion": "0.78.1",
   "defaultProvider": "cloudflare-workers-ai",
-  "defaultModel": "@cf/openai/gpt-oss-120b",
+  "defaultModel": "@cf/google/gemma-4-26b-a4b-it",
   "defaultThinkingLevel": "high",
   "enabledModels": [
     "cloudflare-workers-ai/@cf/moonshotai/kimi-k2.6",
     "cloudflare-workers-ai/@cf/qwen/qwen3-30b-a3b-fp8",
     "cloudflare-workers-ai/@cf/nvidia/nemotron-3-120b-a12b",
     "cloudflare-workers-ai/@cf/google/gemma-4-26b-a4b-it",
-    "cloudflare-workers-ai/@cf/openai/gpt-oss-120b",
     "google/gemini-2.5-flash-lite",
     "google/gemini-3.1-flash-lite",
     "groq/qwen/qwen3-32b",
@@ -19,9 +18,9 @@
     "opencode/minimax-m3-free",
     "opencode/deepseek-v4-flash-free",
     "opencode/mimo-v2.5-free",
-    "opencode/nemotron-3-ultra-free",
-    "cloudflare-workers-ai/@cf/openai/gpt-oss-120b"
+    "opencode/nemotron-3-ultra-free"
   ],
   "enableInstallTelemetry": false,
-  "theme": "dark"
+  "theme": "dark",
+  "hideThinkingBlock": true
 }
