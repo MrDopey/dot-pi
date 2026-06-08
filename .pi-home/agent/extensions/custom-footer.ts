@@ -1,7 +1,6 @@
 /**
  * Extension that colors the session name yellow in the footer.
  */
-import type { AssistantMessage } from "@earendil-works/pi-ai";
 import type { ExtensionAPI } from "@earendil-works/pi-coding-agent";
 import { truncateToWidth, visibleWidth } from "@earendil-works/pi-tui";
 
@@ -19,11 +18,11 @@ export default function (pi: ExtensionAPI) {
           const branch = footerData.getGitBranch();
 
           // Build pwd line with yellow session name
-          let pwd = cwd.replace(/^\/home\/[^/]+/, "~");
+          const separator = " • ";
+          let pwd = cwd.split("/").filter(Boolean).pop() || cwd;
           if (branch) pwd += ` (${branch})`;
           
           if (sessionName) {
-            const separator = " • ";
             const yellowName = theme.fg("warning", sessionName);
             // Account for ANSI codes in width calculation
             const baseWidth = visibleWidth(pwd + separator);
@@ -38,34 +37,29 @@ export default function (pi: ExtensionAPI) {
             }
           }
           
-          const pwdLine = truncateToWidth(theme.fg("dim", pwd), width, theme.fg("dim", "..."));
-
-          // Context usage
-          let contextUsed = 0;
-          const entries = ctx.sessionManager.getEntries();
-          for (let i = entries.length - 1; i >= 0; i--) {
-            const e = entries[i];
-            if (e.type === "message" && e.message.role === "assistant") {
-              contextUsed = (e.message as AssistantMessage).usage.input;
-              break;
-            }
-          }
-
+          // Context usage via built-in context tracking
+          const contextUsage = ctx.getContextUsage();
           const fmt = (n: number) => n < 1000 ? `${n}` : `${(n / 1000).toFixed(1)}k`;
-          const maxContext = ctx.model?.contextWindow;
-          let left: string;
-          if (maxContext && maxContext > 0) {
-            const pct = Math.round((contextUsed / maxContext) * 100);
-            left = theme.fg("dim", `ctx: ${fmt(contextUsed)}/${fmt(maxContext)} (${pct}%)`);
+          const blue = theme.getFgAnsi("border");
+          const dim = theme.getFgAnsi("dim");
+          let ctxStr: string;
+          if (contextUsage && contextUsage.contextWindow > 0) {
+            const pct = contextUsage.percent !== null ? contextUsage.percent.toFixed(1) : "?";
+            ctxStr = `${blue}${pct}%${dim}/${fmt(contextUsage.contextWindow)} (auto)`;
           } else {
-            left = theme.fg("dim", `ctx: ${fmt(contextUsed)}`);
+            ctxStr = "";
           }
-          const right = theme.fg("dim", ctx.model?.id || "no-model");
+          const thinkingLevel = pi.getThinkingLevel();
+          const green = theme.getFgAnsi("success");
+          const modelStr = ctx.model ? `(${ctx.model.provider}) ${green}${ctx.model.id}${dim}${separator}${thinkingLevel}` : "no-model";
+          const right = theme.fg("dim", ctxStr ? `${ctxStr}${separator}${modelStr}` : modelStr);
 
-          const pad = " ".repeat(Math.max(1, width - visibleWidth(left) - visibleWidth(right)));
-          const statsLine = truncateToWidth(left + pad + right, width);
+          // Collapse into single line: pwd on left, stats on right
+          const pwdStyled = theme.fg("dim", pwd);
+          const pad = " ".repeat(Math.max(1, width - visibleWidth(pwdStyled) - visibleWidth(right)));
+          const line = truncateToWidth(pwdStyled + pad + right, width, theme.fg("dim", "..."));
 
-          return [pwdLine, statsLine];
+          return [line];
         },
       };
     });

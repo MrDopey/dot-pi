@@ -1,8 +1,8 @@
 import type { ExtensionAPI, ExtensionContext } from "@earendil-works/pi-coding-agent";
 
 // --- Configuration ---
-const RENAME_INTERVAL = parseInt(process.env.PI_SESSION_RENAMER_INTERVAL || "2", 10) || 5;
-const CONTEXT_LIMIT = parseInt(process.env.PI_SESSION_RENAMER_CONTEXT_LIMIT || "300", 10) || 3000;
+const RENAME_INTERVAL = parseInt(process.env.PI_SESSION_RENAMER_INTERVAL || "5", 10) || 5;
+const CONTEXT_LIMIT = parseInt(process.env.PI_SESSION_RENAMER_CONTEXT_LIMIT || "300", 10) || 300;
 const PI_MODEL = process.env.PI_SESSION_RENAMER_MODEL; // Optional
 
 // --- Helper Functions ---
