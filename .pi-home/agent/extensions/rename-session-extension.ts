@@ -7,7 +7,6 @@ const PI_MODEL = process.env.PI_SESSION_RENAMER_MODEL; // Optional
 
 // --- Helper Functions ---
 
-/** Normalizes a name: lowercase, spaces/punctuation -> hyphens, no leading/trailing hyphens */
 function normalizeName(name: string): string {
   return name
     .trim()
@@ -16,7 +15,6 @@ function normalizeName(name: string): string {
     .replace(/^-+|-+$/g, '');
 }
 
-/** Efficiently extracts the last N characters of text content by iterating backwards */
 function getRecentContext(ctx: ExtensionContext): string {
   const entries = ctx.sessionManager.getEntries();
   let context = "";
@@ -35,9 +33,7 @@ function getRecentContext(ctx: ExtensionContext): string {
 
       context = text + "\n" + context;
 
-      if (context.length >= CONTEXT_LIMIT) {
-        break;
-      }
+      if (context.length >= CONTEXT_LIMIT) break;
     }
   }
 
@@ -51,11 +47,8 @@ let promptCount = 0;
 export default function (pi: ExtensionAPI) {
   pi.on("agent_end", async (_event, ctx) => {
     promptCount++;
-    console.log(`[RenamePlugin] Agent completed. Count: ${promptCount}/${RENAME_INTERVAL}`);
 
     if (promptCount >= RENAME_INTERVAL) {
-      console.log("[RenamePlugin] Interval reached. Generating new name...");
-
       const recentContext = getRecentContext(ctx);
       const fullPrompt = `Context:\n${recentContext}\n\nInstruction: Suggest a very short, 3-word name (normalized lowercase-hyphens) based on this context. Return ONLY the name.`;
 
@@ -90,7 +83,6 @@ export default function (pi: ExtensionAPI) {
               : reject(new Error(`Child process exited with code ${code}`)));
           });
 
-          // Kill entire process group on timeout (catches grandchildren holding pipe FDs)
           const timer = setTimeout(() => {
             if (settled) return;
             try { process.kill(-pid, 'SIGTERM'); } catch { /* already dead */ }
@@ -100,14 +92,13 @@ export default function (pi: ExtensionAPI) {
         });
 
         const newName = normalizeName(stdout.trim());
-        pi.setSessionName(newName);
-        console.log(`[RenamePlugin] Session renamed to: ${newName}`);
-        promptCount = 0;
-      } catch (error: any) {
-        console.error(`[RenamePlugin] Failed to rename session: ${error.message}`);
+        if (newName) {
+          pi.setSessionName(newName);
+          promptCount = 0;
+        }
+      } catch {
+        // Silently fail — don't pollute TUI with error output
       }
     }
   });
-
-  console.log("[RenamePlugin] Activated successfully.");
 }
