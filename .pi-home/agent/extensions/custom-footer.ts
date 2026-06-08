@@ -40,18 +40,26 @@ export default function (pi: ExtensionAPI) {
           
           const pwdLine = truncateToWidth(theme.fg("dim", pwd), width, theme.fg("dim", "..."));
 
-          // Token stats
-          let input = 0, output = 0;
-          for (const e of ctx.sessionManager.getEntries()) {
+          // Context usage
+          let contextUsed = 0;
+          const entries = ctx.sessionManager.getEntries();
+          for (let i = entries.length - 1; i >= 0; i--) {
+            const e = entries[i];
             if (e.type === "message" && e.message.role === "assistant") {
-              const m = e.message as AssistantMessage;
-              input += m.usage.input;
-              output += m.usage.output;
+              contextUsed = (e.message as AssistantMessage).usage.input;
+              break;
             }
           }
 
           const fmt = (n: number) => n < 1000 ? `${n}` : `${(n / 1000).toFixed(1)}k`;
-          const left = theme.fg("dim", `↑${fmt(input)} ↓${fmt(output)}`);
+          const maxContext = ctx.model?.contextWindow;
+          let left: string;
+          if (maxContext && maxContext > 0) {
+            const pct = Math.round((contextUsed / maxContext) * 100);
+            left = theme.fg("dim", `ctx: ${fmt(contextUsed)}/${fmt(maxContext)} (${pct}%)`);
+          } else {
+            left = theme.fg("dim", `ctx: ${fmt(contextUsed)}`);
+          }
           const right = theme.fg("dim", ctx.model?.id || "no-model");
 
           const pad = " ".repeat(Math.max(1, width - visibleWidth(left) - visibleWidth(right)));
