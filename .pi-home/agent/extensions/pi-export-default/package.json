@@ -1,9 +1,0 @@
-{
-  "name": "pi-export-default",
-  "version": "1.0.0",
-  "description": "Pi extension to export sessions to a default location specified by PI_EXPORT_DIR",
-  "main": "index.ts",
-  "engines": {
-    "node": ">=18"
-  }
-}
