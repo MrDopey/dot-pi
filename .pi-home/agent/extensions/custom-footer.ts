@@ -41,18 +41,17 @@ export default function (pi: ExtensionAPI) {
           const pwdLine = truncateToWidth(theme.fg("dim", pwd), width, theme.fg("dim", "..."));
 
           // Token stats
-          let input = 0, output = 0, cost = 0;
+          let input = 0, output = 0;
           for (const e of ctx.sessionManager.getEntries()) {
             if (e.type === "message" && e.message.role === "assistant") {
               const m = e.message as AssistantMessage;
               input += m.usage.input;
               output += m.usage.output;
-              cost += m.usage.cost.total;
             }
           }
 
           const fmt = (n: number) => n < 1000 ? `${n}` : `${(n / 1000).toFixed(1)}k`;
-          const left = theme.fg("dim", `↑${fmt(input)} ↓${fmt(output)} $${cost.toFixed(3)}`);
+          const left = theme.fg("dim", `↑${fmt(input)} ↓${fmt(output)}`);
           const right = theme.fg("dim", ctx.model?.id || "no-model");
 
           const pad = " ".repeat(Math.max(1, width - visibleWidth(left) - visibleWidth(right)));
