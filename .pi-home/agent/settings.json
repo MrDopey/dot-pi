@@ -1,7 +1,7 @@
 {
   "lastChangelogVersion": "0.78.1",
-  "defaultProvider": "google",
-  "defaultModel": "gemini-3.1-flash-lite",
+  "defaultProvider": "opencode",
+  "defaultModel": "mimo-v2.5-free",
   "defaultThinkingLevel": "high",
   "enabledModels": [
     "cloudflare-workers-ai/@cf/moonshotai/kimi-k2.6",
@@ -14,12 +14,11 @@
     "groq/openai/gpt-oss-120b",
     "mistral/codestral-latest",
     "mistral/devstral-2512",
-    "opencode/minimax-m3-free",
     "opencode/deepseek-v4-flash-free",
     "opencode/mimo-v2.5-free",
     "opencode/nemotron-3-ultra-free"
   ],
   "enableInstallTelemetry": false,
   "theme": "dark",
-  "hideThinkingBlock": true
+  "hideThinkingBlock": false
 }
