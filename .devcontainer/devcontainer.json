@@ -22,7 +22,8 @@
 	},
 	"containerEnv": {
 		"CLOUDFLARE_ACCOUNT_ID": "${localEnv:CLOUDFLARE_ACCOUNT_ID}",
-		"PI_EXPORT_DIR": "./.pi-export"
+		"PI_EXPORT_DIR": "./.pi-export",
+		"PI_SESSION_RENAMER_MODEL": "google/gemini-3.1-flash-lite"
 	},
 
 	"mounts": ["source=${localWorkspaceFolder}/.pi-home,target=/home/lovely/.pi,type=bind"],

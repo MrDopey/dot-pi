@@ -1,7 +1,7 @@
 import type { ExtensionAPI, ExtensionContext } from "@earendil-works/pi-coding-agent";
 
 // --- Configuration ---
-const RENAME_INTERVAL = parseInt(process.env.PI_SESSION_RENAMER_INTERVAL || "5", 10) || 5;
+const RENAME_INTERVAL = parseInt(process.env.PI_SESSION_RENAMER_INTERVAL || "10", 7) || 7;
 const CONTEXT_LIMIT = parseInt(process.env.PI_SESSION_RENAMER_CONTEXT_LIMIT || "300", 10) || 300;
 const PI_MODEL = process.env.PI_SESSION_RENAMER_MODEL; // Optional
 
@@ -42,7 +42,7 @@ function getRecentContext(ctx: ExtensionContext): string {
 
 // --- Plugin Logic ---
 
-let promptCount = 0;
+let promptCount = Math.max(0, RENAME_INTERVAL - 2); // The first rename triggers earlier than the interval
 
 export default function (pi: ExtensionAPI) {
   pi.on("agent_end", async (_event, ctx) => {
