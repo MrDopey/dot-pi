@@ -21,7 +21,8 @@
 		 }
 	},
 	"containerEnv": {
-		"CLOUDFLARE_ACCOUNT_ID": "${localEnv:CLOUDFLARE_ACCOUNT_ID}"
+		"CLOUDFLARE_ACCOUNT_ID": "${localEnv:CLOUDFLARE_ACCOUNT_ID}",
+		"PI_EXPORT_DIR": "./.pi-export"
 	},
 
 	"mounts": ["source=${localWorkspaceFolder}/.pi-home,target=/home/lovely/.pi,type=bind"],

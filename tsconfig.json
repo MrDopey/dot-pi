@@ -8,6 +8,6 @@
     }
   },
   "include": [
-    ".pi-home/extensions/**/*.ts"
+    ".pi-home/agent/extensions/**/*.ts",
   ]
 }

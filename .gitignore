@@ -1,3 +1,5 @@
+node_modules/
+
 .pi-home/agent/auth.json
 .pi-home/agent/sessions/
 .pi/agent/auth.json
