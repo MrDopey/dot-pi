@@ -39,7 +39,11 @@ export default function (pi: ExtensionAPI) {
           
           // Context usage via built-in context tracking
           const contextUsage = ctx.getContextUsage();
-          const fmt = (n: number) => n < 1000 ? `${n}` : `${(n / 1000).toFixed(1)}k`;
+          const fmt = (n: number) => {
+            if (n < 1000) return `${n}`;
+            if (n < 1000000) return `${(n / 1000).toFixed(1)}k`;
+            return `${(n / 1000000).toFixed(1)}m`;
+          };
           const blue = theme.getFgAnsi("border");
           const dim = theme.getFgAnsi("dim");
           let ctxStr: string;
