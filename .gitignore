@@ -1,7 +1,5 @@
 node_modules/
 
-.pi-home/agent/auth.json
-.pi-home/agent/sessions/
-.pi/agent/auth.json
-.pi/agent/sessions/
+agent/auth.json
+agent/sessions/
 pi-session-*.html
