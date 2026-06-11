@@ -1,7 +1,7 @@
 {
   "lastChangelogVersion": "0.78.1",
-  "defaultProvider": "opencode",
-  "defaultModel": "mimo-v2.5-free",
+  "defaultProvider": "cloudflare-workers-ai",
+  "defaultModel": "@cf/moonshotai/kimi-k2.6",
   "defaultThinkingLevel": "high",
   "enabledModels": [
     "cloudflare-workers-ai/@cf/moonshotai/kimi-k2.6",
@@ -10,7 +10,6 @@
     "cloudflare-workers-ai/@cf/google/gemma-4-26b-a4b-it",
     "google/gemini-3.1-flash-lite",
     "groq/qwen/qwen3-32b",
-    "groq/mistral-saba-24b",
     "groq/openai/gpt-oss-120b",
     "mistral/codestral-latest",
     "mistral/devstral-2512",
